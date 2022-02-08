@@ -316,8 +316,131 @@ promise
 
 ```
 
+new Promise를 통해 프로미스를 생성할 수 있으며 그 내부에 resolve와 reject를 매개변수로 갖는 콜백함수를 넣는다. 이렇게 만든 promise변수에 then과 catch 메서드를 붙일 수 있다. 프로미스 내부에서 resolve가 호출되면 then이 실행되고 reject가 호출되면 catch가 실행된다. finally 부분은 성공/실패의 여부와 상관없이 실행된다. 
 
-자바스크립트와 노드에서는 주로 비동기를 접한다. 특히 이벤트 리스너를 사용할 때 콜백 함수를 사용한다. ES2015부터는 자바스크립트와 노드의 API들이 콜백함수 대신 Promise기반으로 재구성되며 악명 높은 콜백지옥현상을 극복했다는 평가를 받고 있다. 다음은 Promise의 규칙이다
+resolve와 reject에 넣어준 인수는 각각 then, catch의 매개변수에서 받을 수 있다. 즉, resolve('성공')이 호출되면 then의 message가 '성공'이 된다. 
+
+프로미스를 쉽게 설명하면 '실행은 바로하되 결괏값은 나중에 받는 객체'이다. 결괏값은 실행이 완료된 후에 then이나 catch메서드를 통해 받는다. 위 예제에서는 new Promise와 promise.then사이에 다른 코드가 들어갈 수 있다. 
+
+```javascript
+promise.then((message)=>{
+  return new Promise((resolve, reject) => {
+    resolve(message);
+  });
+})
+.then((message2)=>{
+  return new Promise((resolve, reject) = > {
+    resolve(message2);
+  });
+})
+.then((message3) => {
+  console.log(message3);
+})
+.catch((error)=>{
+  console.error(error);
+});
+
+```
+처음 then에서 message를 resolve하면 다음 then에서 message2로 받을 수 있다. 여기서 다시 message2를 resolve한 것을 다음 then에서 message3으로 받는다. 단, then에서 new Promise를 return해야 다음 then에서 받을 수 있다. 
 
 ## 프론트엔드 자바스크립트
+### AJAX(Asynchronous Javascript And XML)
+Ajax는 비동기적 웹 서비스를 개발할 때 사용하는 기법이다. 이름에 XML이 들어있지만 반드시 XML을 사용해야하는건 아니고 최근에는 JSON도 많이 쓴다. AJAX를 쉽게 말하면 페이지 이동없이 서버에 요청을 보내고 응답을 받는 기술이다. 보통 AJAX요청은 jQuery나 axios같은 라이브러리를 이용해서 보낸다. 브라우저에서 기본적으로 XMLHttpRequest객체를 제공하긴 하나, 사용 방법이 복잡하고 서버에서는 사용할 수 없다.
+
+프론트에서 사용하기 위해서는 html파일에 script 태그를 넣어줘야한다. 
+```html
+<script src = "https://upkg.com/axios/dist/axios.min.js"></script>
+<script>
+  axios.get("https://www.zerocho.com/api/get")
+    .then((result)=>{
+      console.log(result);
+    })
+    .catch(err){
+       console.log(err);
+    }
+</script>
+```
+axios.get도 내부에 new Promise가 들어 있으므로 then과 catch를 사용할 수 있다. Promise패턴을 async/await으로 바꿔보자
+
+*GET통신
+```javascript
+(async() = > {
+  try{
+    const result = await axios.get("https://www.zerocho.com");
+    console.log(result.data);
+  }catch(e){
+    console.error(error);
+  }
+})();
+```
+이번엔 POST 통신이다.
+
+
+*POST통신
+```javascript
+(async() = > {
+  try{
+    const result = await axios.post("https://www.zerocho.com", {
+      name:'jjw',
+      birth:1994
+    });
+    console.log(result.data);
+  }catch(e){
+    console.error(error);
+  }
+})();
+```
+
+### FORMDATA
+
+HTML form태그의 데이터를 동적으로 제어할 수 있는 기능이다. 주로 AJAX와 함께 사용된다. 먼저 FormData 생성자로 formData객체를 만든다. 
+
+```javascript
+const formData = new FormData();
+formData.append('name','jjw');
+formData.append('item','123');
+formData.append('item','1234');
+formData.get('item')//123
+formData.getall('item')//[123,1234]
+```
+
+이제 axios를 통해서 폼 데이터를 서버에 보내보자.
+
+```javascript
+(async() => {
+  try{
+    const formData = new FormData();
+    formData.append('name', 'jjw');
+    
+    const result = await axios.post("https://www.zerocho.com/api/post/formData", formData);
+    console.log(result.data);
+  }catch(e){
+  
+  }
+
+})();
+
+```
+
+### 데이터 속성과 dataset
+
+노드를 웹 서버로 사용하는 경우, 클라이언트와 빈번하게 데이터를 주고받게 된다. 이때 서버에서 보내준 데이터를 프론트엔드 어디에 넣어야 할지 고민하게 된다.  HTML5에도 HTML에 데이터를 저장하는 공식적인 방법이 있다.바로 데이터 속성이다. 
+
+
+```html
+<ul>
+  <li data-id = "1" data-user-job = "programmer">Zero</li>
+  <li data-id = "2" data-user-job = "programmer1">Zero</li>
+  <li data-id = "3" data-user-job = "programmer2">Zero</li>
+  <li data-id = "4" data-user-job = "programmer3">Zero</li>
+</url>
+
+<script>
+  console.log(document.querySelector('li').dataset);
+  //{id:1, userJob:"programmer"}
+</script>
+```
+
+
+
 
