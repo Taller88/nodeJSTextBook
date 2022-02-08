@@ -66,18 +66,18 @@ console.log("끝");
  노드는 I/O작업을 백그라운드에 넘겨서 동시에 처리하곤 한다. 따라서 동시에 처리될 수 있는 작업들은 최대한 묶어서 백그라운드로 넘겨야 시간을 절약할 수 있다. 
  
  * 블로킹 방식의 코드
- '''javascript 
+```javascript 
  function longRunningTask(){
   console.log('작업 끝');
  }
  console.log("시작");
  longRuningTask();
  console.log("끝");
- '''
+```
  
  
  * 논블로킹 방식의 코드 
- '''javascript
+ ```javascript
  function longRunningTask(){
   console.log("작업 끝");
  }
@@ -85,7 +85,7 @@ console.log("끝");
  setTimeout(longRuningTask, 0);
  console.log("끝");
  
- '''
+```
 
 
 
