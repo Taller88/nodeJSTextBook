@@ -25,6 +25,7 @@ nodeJS 교과서 서적 copy 및 정리 respository
 
 
 ## 이벤트 기반 
+![image](https://user-images.githubusercontent.com/48818574/152928638-a239c9d7-53ec-4c1b-bf6d-b8cb88b5ea21.png)
 
   * Event loop 
     - 이벤트 발생 시 호출할 콜백 함수를 관리 
