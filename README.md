@@ -61,6 +61,33 @@ console.log("끝");
 
 
 
+## 논 블로킹I/O
+ 논 블로킹이란 이전 작업이 완료될 때까지 대기하지 않고 다음 작업을 수행함을 뜻한다. 
+ 노드는 I/O작업을 백그라운드에 넘겨서 동시에 처리하곤 한다. 따라서 동시에 처리될 수 있는 작업들은 최대한 묶어서 백그라운드로 넘겨야 시간을 절약할 수 있다. 
+ 
+ * 블로킹 방식의 코드
+ '''javascript 
+ function longRunningTask(){
+  console.log('작업 끝');
+ }
+ console.log("시작");
+ longRuningTask();
+ console.log("끝");
+ '''
+ 
+ 
+ * 논블로킹 방식의 코드 
+ '''javascript
+ function longRunningTask(){
+  console.log("작업 끝");
+ }
+ console.log("시작");
+ setTimeout(longRuningTask, 0);
+ console.log("끝");
+ 
+ '''
+
+
 
 
 
