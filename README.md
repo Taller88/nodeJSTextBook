@@ -16,12 +16,12 @@ nodeJS 교과서 서적 copy 및 정리 respository
 ![image](https://user-images.githubusercontent.com/48818574/152919495-ef4e4440-e9cf-4985-8d99-0aeaa39c7a92.png)
 
 * V8
- ** 구글에서 크롬에서 사용하고 있는 엔진
- ** C, C++로 개발
+ - 구글에서 크롬에서 사용하고 있는 엔진
+ - C, C++로 개발
     
 * libuv
- ** 이벤트 기반, 논 블록킹 I/O 모델 구현
- ** C, C++로 개발
+ - 이벤트 기반, 논 블록킹 I/O 모델 구현
+ - C, C++로 개발
 
 
 ## 이벤트 기반 
