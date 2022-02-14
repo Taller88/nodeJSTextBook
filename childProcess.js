@@ -1,7 +1,7 @@
 const spawn = require('child-process').spawn;
 
 
-// 파이썬을 실행 
+// 파이썬을 실행 cmd창에서 하나 실행한다고 생각하자.
 const process = spawn('python', [test.py]);
 
 process.stdout.on('data', function(data){
