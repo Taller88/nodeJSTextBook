@@ -14,17 +14,9 @@ app.set('port', process.env.PORT || 3000);
 app.use((req, res, next) =>{
     console.log("모든 요청에서 하고 싶어여");
     next();
-})
-
-// ---------------------------------------------------------------------Router
-app.get('/', (req, res) =>{
-    res.sendFile(path.join(__dirname,'/index.html'));
-    // res.send("안녕하세여.");     -> 한 router에 두번 이상 나오면 (미들웨어 포함)
-    // res.json({})
-    // res.writeHead() -> 이미 응답을 완료하고 head쓰면 안됨.
 },(req, res, next)=>{
     try{
-        console.log("에러발생");
+        // console.log("에러발생");
         // throw new Error("에러야!!!")
     }catch(err){
         /**
@@ -35,6 +27,14 @@ app.get('/', (req, res) =>{
         next(err);// throw Error는 잘 안씀
         //next('router')는 같은 router처리할때 
     }
+})
+
+// ---------------------------------------------------------------------Router
+app.get('/', (req, res) =>{
+    res.sendFile(path.join(__dirname,'/index.html'));
+    // res.send("안녕하세여.");     -> 한 router에 두번 이상 나오면 (미들웨어 포함)
+    // res.json({})
+    // res.writeHead() -> 이미 응답을 완료하고 head쓰면 안됨.
 })
 
 app.get('/jsonTest', (req, res) =>{
