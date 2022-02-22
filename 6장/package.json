@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start" :"nodemon app"
+    "start": "nodemon app"
   },
   "author": "jjw",
   "license": "MIT",
@@ -11,6 +11,9 @@
     "nodemon": "^2.0.3"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0"
   }
 }

@@ -3,6 +3,9 @@
 // node_module은 보통안올리고 소스코드 받아서 'npm i'로 해줌
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 // 서버에 속성을 심는다. 
@@ -11,6 +14,11 @@ const app = express();
 
 app.set('port', process.env.PORT || 3000);
 // ---------------------------------------------------------------------공통 middleware
+// morgan : 요청보냈을때 서버에서 응답을 어떻게 했는지 알수가 있음
+app.use(morgan('dev'));
+app.use(cookieParser())
+// app.use(morgan('combined'));     <- dev보다 더 자세함 IP, 브라우저, 시간까지 <- [배포용]
+
 app.use((req, res, next) =>{
     console.log("모든 요청에서 하고 싶어여");
     next();
