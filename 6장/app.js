@@ -32,7 +32,7 @@ app.use((req, res, next) =>{
 // ---------------------------------------------------------------------Router
 app.get('/', (req, res) =>{
     res.sendFile(path.join(__dirname,'/index.html'));
-    // res.send("안녕하세여.");     -> 한 router에 두번 이상 나오면 (미들웨어 포함)
+    // res.send("안녕하세여.");      -> 한 router에 두번 이상 나오면 (미들웨어 포함)
     // res.json({})
     // res.writeHead() -> 이미 응답을 완료하고 head쓰면 안됨.
 })
