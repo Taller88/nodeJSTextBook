@@ -8,6 +8,7 @@ const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const nunjucks = require('nunjucks');
 
 const fs = require('fs');
 // 여기서 서버에서는 Sync를 쓰면 안되는데 쓰는 이유는 서버 시작전이라 그런거임.
@@ -25,6 +26,11 @@ dotenv.config();
 // 바꾸려면 서버끄고 터미널에서 SET PORT = 8001 -> 한번 세팅하면 8001로 세팅가능 
 
 app.set('port', process.env.PORT || 3000);
+app.set('view engine', 'html');
+nunjucks.configure('views', { // views 폴더가 nunjucks 폴더가됨
+    express:app,
+    watch:true
+})
 
 // 미들웨어의 순서도 굉장히 중요하다. 
 // ---------------------------------------------------------------------공통 middleware
