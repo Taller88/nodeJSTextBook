@@ -1,16 +1,29 @@
 // mysql node Sequelize 해주는 코드 
 const Sequelize = require('sequelize');
+const User = require('./user');
+const Comment = require('./comment');
 
-const env = process.env.NODE_ENV || 'developer';
+const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+// 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Sequelize 객체 : 생성자 <- new Sequelize
+// db.Sequelize = Sequelize;
 
+db.User = User;
+db.Comment = Comment;
 
+User.init(sequelize);
+Comment.init(sequelize);
+
+User.associate(db);
+Comment.associate(db);
+
+module.exports = db;
 // 'use strict';
 
 // const fs = require('fs');
