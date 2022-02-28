@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/', async(req, res, next)=>{
     try{
-        const comment = await Comment.Create({
+        const comment = await Comment.create({
             commenter:req.body.id,
             comment:req.body.comment
         });
@@ -19,12 +19,10 @@ router.post('/', async(req, res, next)=>{
 });
 
 
-
-
 router.route("/:id")
     .patch(async(req, res, next)=>{
         try{
-            const result = Comment.update({
+            const result = await Comment.update({
                 comment:req.body.comment
             },{
                 where:{id:req.params.id}
