@@ -1,0 +1,30 @@
+
+use admin
+
+
+db.createUser({user:'root', 'pwd':'jjwoo616!', roles:['root']})
+
+
+
+다시 껐다가 킴 
+MONGOD -> MONGO
+    mongo admin -u root -p jjwoo616!
+
+
+
+use nodejs
+
+show dbs < 데이터를 넣기 전까지 안뜸 
+
+컬렉션 생성하기 
+    : SQL로 치면 테이블 
+    
+db.createCollection('user')
+
+
+
+컬럼 필드
+로우 = document
+
+
+
