@@ -6,8 +6,10 @@ const path = require('path');
 const nunjucks = require('nunjucks');
 const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv');
+const passport  = require('passport');
 
 dotenv.config(); //dotenv는 require마치고 <- process관련 정보
+
 
 
 const pageRouter = require('./routes/page');
@@ -45,6 +47,10 @@ app.use(session({
     }
 }))
 
+// 다른 라우터보다 앞에 있어야함 
+app.use(passport.initialize());
+app.use(passport.session());
+// passport .session이 시작될 때 deserialize가 실행됨
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);

@@ -10,7 +10,7 @@ module.export = ()=>{
     });
     passport.deserialzeUser((id,done)=>{
         User.findOne({where:{id}})
-            .then(user => done(null,user))
+            .then(user => done(null,user))// req.user로 접근 가능하게 함 , req.isAuthenticated() <- 로그인 시 true
             .catch(err => don(err))
     });
     local();
