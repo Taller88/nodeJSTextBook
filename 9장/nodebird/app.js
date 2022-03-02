@@ -9,7 +9,11 @@ const dotenv = require('dotenv');
 
 dotenv.config(); //dotenv는 require마치고 <- process관련 정보
 
+
 const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
+
+
 const {sequelize} = require('./models')
 const app = express();
 
@@ -43,7 +47,7 @@ app.use(session({
 
 
 app.use('/', pageRouter);
-
+app.use('/auth', authRouter);
 
 // 404 처리 미들웨어
 app.use((req, res, next)=>{
