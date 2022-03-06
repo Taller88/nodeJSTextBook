@@ -59,4 +59,5 @@ router.get('/logout',(req, res)=>{
     res.redirect("/");
 })
 
+router.get('/kakao', passport.authenticate('kakao'));
 module.exports = router;
