@@ -17,7 +17,10 @@ const authRouter = require('./routes/auth');
 
 
 const {sequelize} = require('./models')
+const passportConfig  = require('./passport');
+
 const app = express();
+passportConfig();
 
 app.set('port', process.env.PORT || 8001);//개발 8001, 배포는 80 or 443
 app.set('view engine', 'html');
@@ -32,6 +35,7 @@ sequelize.sync({force:false})
     .catch((err)=>{
         console.error(err)
     })
+
 app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
