@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require('multer');
 const session = require('express-session');
 const morgan = require('morgan');
 const path = require('path');
@@ -14,6 +13,9 @@ dotenv.config(); //dotenv는 require마치고 <- process관련 정보
 
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
+const userRouter = require('./routes/user');
+
 
 
 const {sequelize} = require('./models')
@@ -38,6 +40,8 @@ sequelize.sync({force:false})
 
 app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/img',express.static(path.join(__dirname, 'uploads'))); // multer 이미지 
+
 app.use(express.json())
 app.use(express.urlencoded({extends:true}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -58,6 +62,9 @@ app.use(passport.session());
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/post',postRouter);
+app.use('/user',userRouter);
+
 
 // 404 처리 미들웨어
 app.use((req, res, next)=>{
@@ -67,13 +74,12 @@ app.use((req, res, next)=>{
 })
 
 //에러 미들웨어
-app.use((err, req, res, next)=>{ //마지막 next 는 에러처리 미들웨어는 반드시 next써줘야함
-    res.locals.message = err.message;// 템플릿엔진에서 변수
-    res.locals.error = process.env.NODE_ENV !== 'production' ? err: {};
-    res.status(err.status||500);//500은 서버 에러
-    res.render('error');
-})
-
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 app.listen(app.get('port'),()=>{
     console.log(app.get('port')+" 번 포트 open")
