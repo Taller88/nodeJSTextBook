@@ -5,14 +5,15 @@ const nunjucks = require('nunjucks');
 const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv');
 const passport  = require('passport');
-const express = require('express')
+const express = require('express');
+
 dotenv.config(); //dotenv는 require마치고 <- process관련 정보
 
 
 
 const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
-
+const v1 = require('./routes/v1')
 
 
 const {sequelize} = require('./models')
@@ -59,7 +60,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
+app.use('/v1', v1);
 
 app.use((req, res, next)=>{
     const err = new Error(`[${req.method}] ${req.url}라우터가 없습니다.`)
