@@ -1,5 +1,7 @@
 const express = require('express');
 
+const {isLoggendIn, isNotLoggedIn } = require('./middlewares');
+const {Post, User}= require('')
 const router = express.Router();
 
 router.use((req, res, next)=>{
