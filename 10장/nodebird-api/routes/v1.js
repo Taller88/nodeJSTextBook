@@ -2,9 +2,45 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const { verifyToken } = require('./middlewares');
-const { Domain, User } = require('../models');
+const { Domain, User, Post } = require('../models');
 
 const router = express.Router();
+router.get('/post/my', verifyToken, async (req, res)=>{
+  try{
+    const posts = await Post.findAll({where:{userId: req.decoded.id}})
+    res.json({
+      code:200,
+      payload:posts});
+  
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({
+      code:500,
+      message:'서버 에러'
+    })
+  }
+})
+
+router.get('/posts/hashtag/:title', verifyToken, (req, res)=>{
+  try{
+    const hashtag = await Hashtag.findOne({where:{title:req.params.title}});
+    if(!hashtag){
+      return res.status(404).json({
+        code:404,
+        message:'검색결과 없습니다.'
+      })
+    }
+    const post = hashtag.getPosts();
+    return res.json({
+      code:200,
+      payload:post
+    })
+  
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({code:500, message:'서버에러'})
+  }
+})
 
 router.post('/token', async (req, res) => {
   const { clientSecret } = req.body;
