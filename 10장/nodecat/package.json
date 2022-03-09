@@ -4,7 +4,8 @@
   "description": "api를 사용하려는 짝퉁",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test":"jest"
   },
   "author": "jjw",
   "license": "MIT",
